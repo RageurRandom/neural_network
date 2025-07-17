@@ -3,9 +3,14 @@ import numpy as np
 import matplotlib
 
 
-# neuron with 4 inputs and a bias
-inputs = [1, 2, 3, 2.5]
+# 3 neuron with 4 inputs and a bias
 
+# this is a batch of inputs
+inputs = [
+            [1, 2, 3, 2.5],
+            [2.0, 5.0, -1.0, 2.0],
+            [-1.5, 2.7, 3.3, -0.8]
+]
 weights = [
     [0.2, 0.8, -0.5, 1.0],
     [0.5, -0.91, 0.26, -0.5],
@@ -13,11 +18,22 @@ weights = [
 ]
 biases = [2, 3, 0.5]
 
+# second layer : 3 neurons with 3 inputs (from the previous layer)
+weights2 = [
+    [0.1, -0.14, 0.5],
+    [-0.5, 0.12, -0.33],
+    [-0.44, 0.73, -0.13]
+]
+biases2 = [-1, 2, -0.5]
+
 # output of one neuron : 
 # weight1 * input1 + weight2 * input2 + ... + bias
 
 # calculates the output of every neurons of this layer
-layer_outputs = np.dot(weights, inputs) + biases
+# We need the transpose of the weights matrix to make the dot product (shape error)
+layer1_outputs = np.dot(inputs, np.array(weights).T) + biases
+layer2_outputs = np.dot(layer1_outputs, np.array(weights2).T) + biases2
 
 
-print(layer_outputs) 
+print(layer1_outputs)
+print(layer2_outputs)
