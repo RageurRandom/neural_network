@@ -1,8 +1,10 @@
 import sys
 import numpy as np
 import matplotlib
+import nnfs
+from nnfs.datasets import spiral_data
 
-np.random.seed(0) # TODO remove
+nnfs.init() # set random seed and default datatype in numpy
 
 # this is a batch of inputs
 X = [
@@ -11,7 +13,12 @@ X = [
     [-1.5, 2.7, 3.3, -0.8]
 ]
 
-class LayerDense:
+X, y = spiral_data(100, 3)
+
+inputs = [0, 2, -1, 3.3, -2.7, 1.1, 22.2, -100]
+output = []
+
+class Layer_Dense:
     def __init__(self, n_inputs, n_neurons):
         self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)
         self.biaises = np.zeros((1, n_neurons)) # in case of a dead network (outputs of 0), this should be changed
@@ -20,11 +27,16 @@ class LayerDense:
         self.output = np.dot(inputs, self.weights) + self.biaises
 
 
-inputs_nb = len(X[0])
-layer1 = LayerDense(inputs_nb, 5)
-layer2 = LayerDense(5, 2)
+class Activation_ReLU:
+    def forward(self, inputs):
+        self.output = np.maximum(0, inputs)
+
+
+layer1 = Layer_Dense(2, 5)
+activation1 = Activation_ReLU()
 
 layer1.forward(X)
-layer2.forward(layer1.output)
+activation1.forward(layer1.output)
 
-print(layer2.output)
+print(layer1.output)
+print(activation1.output)
