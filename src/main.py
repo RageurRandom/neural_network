@@ -9,6 +9,7 @@ from activation_functions.activation_softmax import Activation_Softmax
 from layer.layer_dense import Layer_Dense
 
 
+ITERATION_NUMBER = 100_000
 
 nnfs.init() # set random seed and default datatype in numpy
 X, y = spiral_data(samples=100, classes=3)
@@ -38,7 +39,7 @@ best_dense1_biases = dense1.biases.copy()
 best_dense2_weights = dense2.weights.copy()
 best_dense2_biases = dense2.biases.copy()
 
-for iteration in range(100_000):
+for iteration in range(ITERATION_NUMBER):
     # Update weights with some small random values
     dense1.weights += 0.05 * np.random.randn(2, 3)
     dense1.biases += 0.05 * np.random.randn(1, 3)
